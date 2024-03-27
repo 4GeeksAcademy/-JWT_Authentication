@@ -26,7 +26,7 @@ export const Navbar = () => {
 						<button className="btn btn-outline-info" style={{marginRight:"15px"}}>Signup</button>
 					</Link>
 			 
-					{store.autentificacion === false ? 
+					{store.authentication === false ? 
 					<Link to="/login">
 						<button className="btn btn-outline-primary" style={{marginRight:"15px"}}>Login</button>
 					</Link>
@@ -36,7 +36,7 @@ export const Navbar = () => {
 						<button className="btn btn-outline-warning" style={{marginRight:"15px"}}>Private</button>
 					</Link>
 
-					{store.autentificacion === true ? <button onClick={()=>submitlogout()} className="btn btn-danger">Logout</button>:""}
+					{store.authentication === true ? <button onClick={()=>submitlogout()} className="btn btn-danger">Logout</button>:""}
 						 
 					 
 				</div>

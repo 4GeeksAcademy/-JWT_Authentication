@@ -11,7 +11,7 @@ const Private = () => {
   }, []);
 
 
-  if (!store.autentificacion) {
+  if (!store.authentication) {
     return <Navigate to = "/"/>;
   }
 
@@ -22,7 +22,7 @@ const Private = () => {
        <div className="jumbotron jumbotron-fluid background-private">
         <div className= "container-private">
             <h1 className='display-1'>¡HOLA!</h1>
-            <p className='display-4'> USUARIO</p>
+            <p className='display-5'> USUARIO</p>
             <p className='display-5'>{user}</p>
             <p className="display-6"><strong>Espero que tengas un buen día</strong></p>
         

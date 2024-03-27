@@ -78,16 +78,16 @@ def sitemap():
 def signup():
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({"msg":"Debes enviar información en el body"}),400
+        return jsonify({"msg":"You must send information in the body"}),400
     if "email" not in body:
-        return jsonify({"msg": "Debes enviar un email"}),400
+        return jsonify({"msg": "You must send a email"}),400
     if "password" not in body:
-        return jsonify({"msg": "Debes enviar un password"}),400
+        return jsonify({"msg": "You must send a password"}),400
     
 # Verificar si el usuario ya existe
     existing_user = User.query.filter_by(email=body["email"]).first()
     if existing_user:
-        return jsonify({"msg": "El usuario ya existe"}), 400
+        return jsonify({"msg": "User already exists"}), 400
     
 # Crear un nuevo usuario
     new_user = User()
@@ -97,24 +97,24 @@ def signup():
     new_user.is_active = True
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({"msg": "Usuario creado"}), 200
+    return jsonify({"msg": "User created successfully"}), 200
     
 
 @app.route("/api/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({"msg":"Debes enviar información en el body"}),400
+        return jsonify({"msg":"You must send information in the body"}),400
     if "email" not in body:
-        return jsonify({"msg": "Debes enviar un email"}),400
+        return jsonify({"msg": "You must send a email"}),400
     if "password" not in body:
-        return jsonify({"msg": "Debes enviar un password"}),400
+        return jsonify({"msg": "You must send a password"}),400
 
     user = User.query.filter_by(email=body["email"]).first()
     if user is None:
-        return jsonify({"msg":"El usuario no existe"})
+        return jsonify({"msg":"User doesn't exist"})
     if not bcrypt.check_password_hash(user.password, body["password"]):
-        return  jsonify({"msg":"Contraseña incorrecta"}), 400
+        return  jsonify({"msg":"Password is not valid."}), 400
     access_token = create_access_token(identity=user.email)
     return jsonify({"msg":"Login correcto",
                     "token":access_token,
@@ -136,7 +136,7 @@ def protected():
     current_user = get_jwt_identity()
     user=User.query.filter_by(email=current_user).first()
     if user is None:
-        return jsonify({"msg":"Usuario no encontrado"}), 400
+        return jsonify({"msg":"User not found"}), 400
     
     return jsonify({"user": user.serialize()}), 200
  

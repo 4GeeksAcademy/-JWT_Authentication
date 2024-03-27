@@ -10,11 +10,15 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [isActive, setIsactive] = useState(false);
     const { store, actions } = useContext(Context);
+  
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(email, password, isActive)
         actions.addUser(email,password)
+        setEmail("");
+        setPassword("");
+        setIsactive(false);
     }
 
   return (
@@ -53,6 +57,7 @@ const Signup = () => {
                     </Link>
                     </div>
                 </form>
+               {store.errorMessage === "null" ? "Signup succesfull" : store.errorMessage}
             </div>
         </div>
     </ >
