@@ -135,13 +135,10 @@ def serve_any_other_file(path):
 def protected():
     current_user = get_jwt_identity()
     user=User.query.filter_by(email=current_user).first()
+    if user is None:
+        return jsonify({"msg":"Usuario no encontrado"}), 400
     
-    # print(current_user)
-    # print(user)
-    # print(user.serialize())
-    # print(user.email)
-    # print(user.id)
-    return jsonify({"user": user.email}), 200
+    return jsonify({"user": user.serialize()}), 200
  
 
 # this only runs if `$ python src/main.py` is executed

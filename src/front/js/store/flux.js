@@ -14,8 +14,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+			user:[],
 			autentificacion:false, //Tiene que estar falso para que no esté logado nada más entrar en la web
-	 
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -74,8 +75,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return response.json()
 				  })
 				  .then((data) => {
-					localStorage.setItem("token", data.access_token)
+					localStorage.setItem("token", data.token)
+					localStorage.setItem("email", data.user.email)
 					console.log("DATA Login-->", data)
+					console.log("TOKEN", data.token)
 				  })
 				  .catch((error) => console.error(error));
 			},
@@ -103,33 +106,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  .catch((error) => console.error(error));
 			},
 
-			privateZone: ( )=>{
-				const token = localStorage.getItem("jwt-token");
 			 
-				const requestOptions = {
-					method: "GET",
-					headers:  {
-						"Content-Type": "application/json",
-						'Authorization': 'Bearer ' + token }
-					  };
-				  
-				  
-				  fetch(process.env.BACKEND_URL + "/api/protected", requestOptions)
-					  .then((response) => {
-						console.log(response.status)
-						if (response.status==200){
-							setStore({ autentificacion: true });
-						}  
-						return response.json()
-					  })
-					  .then((data) => {
-						localStorage.setItem("token", data.access_token);
-						localStorage.setItem("email", data.user_email);
-						console.log("DATA private-->", data);
-					  })
-					  .catch((error) => console.error(error));
-				},
-			
+			privateZone: async () => {
+					try {
+						const token = localStorage.getItem('token');
+						
+						const requestOptions = {
+							method: 'GET',
+							headers: { 
+								"Content-Type": "application/json",
+								'Authorization': 'Bearer ' + token
+							} 
+						};
+	
+						const resp = await fetch(process.env.BACKEND_URL + "/api/protected", requestOptions);
+	
+						if (!resp.ok) {
+							throw new Error("There was a problem in the login request");
+						} else if (resp.status === 403) {
+							throw new Error("Missing or invalid token");
+						}
+	
+						const data = await resp.json();
+						console.log("This is the data you requested", data);
+						return data;
+					} catch (error) {
+						console.error(error);
+						setStore({ errorMessage: error.message });
+					}
+				
+			},
 
 			logout: ()=>{
 				console.log("sacame de aqui");

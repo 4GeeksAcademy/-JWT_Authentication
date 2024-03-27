@@ -20,11 +20,6 @@ export const Navbar = () => {
 					<Link to="/">
 						<img src={logo} alt="rigo.baby" width="180"  />
 					</Link>
-					{/* <div className="ml-auto">
-						<Link to="/demo">
-							<button className="btn btn-primary">Check the Context in action</button>
-						</Link>
-					</div> */}
 				</div>
 				<div className="ml-auto">
 					<Link to="/signup">
