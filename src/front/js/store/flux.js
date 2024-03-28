@@ -78,6 +78,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  .then((data) => {
 					localStorage.setItem("token", data.token)
 					localStorage.setItem("email", data.user.email)
+					sessionStorage.setItem("token", data.token)
+					sessionStorage.setItem("email", data.user.email)
 					// console.log("DATA Login-->", data)
 					// console.log("TOKEN", data.token)
 				  })
