@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			
+			signupSuccesfull: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			
 			authentication:false, //Tiene que estar falso para que no esté logado nada más entrar en la web
-			
+			 
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -87,31 +87,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 });
 			},
 
-			addUser: (email,password) => {
-				// console.log("signup desde flux", email, password)
+			addUser: async (email, password) => {
 				const requestOptions = {
 					method: "POST",
-					headers: {"Content-Type": "application/json"},
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						"email": email,
-						"password": password
-					  })
-				  };
-				  
-				  fetch(process.env.BACKEND_URL + "/api/signup", requestOptions)
-				  .then((response) => {
-					console.log(response.status)
-					return response.json()
-				  })
-				  .then((data) => {
-					localStorage.setItem("token", data.access_token)
-					// console.log("DATA AddUser-->", data)
-				  })
-				  .catch((error) => {console.error(error)
-				   });
-			},
+						email: email,
+						password: password
+					})
+				};
 			
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", requestOptions);
+					const data = await response.json();
+			
+					if (response.ok) {
+						// Si la respuesta indica éxito (código de estado 200), devolver true
+						setStore({ signupSuccesfull: "¡Registro exitoso! Ahora puedes iniciar sesión." });
+						return true;
+					} else if (response.status === 400 && data.msg === "User already exists") {
+						// Si el usuario ya existe, devolver false
+						return false;
+					} else {
+						// Si hay algún otro error, lanzar una excepción
+						throw new Error(data.msg || "Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente más tarde.");
+					}
+
+					
+				} catch (error) {
+					// Si ocurre algún error de red u otro error, lanzar una excepción
+					console.error("Error al registrar usuario:", error);
+					throw new Error("Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente más tarde.");
+				}
+			},
 			 
+			
 			privateZone: async () => {
 					try {
 						const token = localStorage.getItem('token');
@@ -143,8 +153,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			logout: ()=>{
-				setStore({ authentication: false })
-				localStorage.removeItem("token")
+				setStore({ authentication: false });
+				localStorage.removeItem("token");
+				localStorage.removeItem("email");
+				sessionStorage.removeItem("email");
+				localStorage.removeItem("token");
 			}
 		}
 	};

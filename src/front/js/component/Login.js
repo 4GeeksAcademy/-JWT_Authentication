@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     < >
-     {store.authentication === true ? <Navigate to = "/private"/> :  
+     {store.authentication === true ? <Navigate to = "/"/> :  
       <div className="jumbotron jumbotron-fluid  background-login ">
       <div className='container-login'>
              <form onSubmit={handleSubmit}>
