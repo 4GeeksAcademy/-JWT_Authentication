@@ -16,7 +16,7 @@ export const Home = () => {
 			
 			<h1>Rigo says:</h1>
 			<p className="display-6">{store.authentication === true ? "You are already logged in, you can access the private area" : "You are not logged in, access your account or register"}</p>
-			{store.signupSuccesfull && <div className="alert alert-success">{store.signupSuccesfull}</div>}
+			{store.signupSuccesful && <div className="alert alert-success">{store.signupSuccesful}</div>}
 			<p>
 				<img src={rigoImageUrl} />
 			</p>
