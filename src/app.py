@@ -116,7 +116,7 @@ def login():
     if not bcrypt.check_password_hash(user.password, body["password"]):
         return  jsonify({"msg":"Password is not valid."}), 400
     access_token = create_access_token(identity=user.email)
-    return jsonify({"msg":"Login correcto",
+    return jsonify({"msg":"Correct login",
                     "token":access_token,
                     "user": user.serialize()}), 200
 

@@ -14,8 +14,8 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			
-			<h1>Rigo dice:</h1>
-			<p className="display-6">{store.authentication === true ? "Ya estás logeado, puedes acceder a la zona privada" : "No estás logueado, accede a tu cuenta o regístrate"}</p>
+			<h1>Rigo says:</h1>
+			<p className="display-6">{store.authentication === true ? "You are already logged in, you can access the private area" : "You are not logged in, access your account or register"}</p>
 			{store.signupSuccesfull && <div className="alert alert-success">{store.signupSuccesfull}</div>}
 			<p>
 				<img src={rigoImageUrl} />

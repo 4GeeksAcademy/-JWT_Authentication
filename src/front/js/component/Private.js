@@ -21,10 +21,10 @@ const Private = () => {
     < >
        <div className="jumbotron jumbotron-fluid background-private">
         <div className= "container-private">
-            <h1 className='display-1'>¡HOLA!</h1>
-            <p className='display-5'> USUARIO</p>
+            <h1 className='display-1'>HI!</h1>
+            <p className='display-5'> USER</p>
             <p className='display-5'>{user}</p>
-            <p className="display-6"><strong>Espero que tengas un buen día</strong></p>
+            <p className="display-6"><strong>I hope you have a good day</strong></p>
         
         <Link to={"/"}>
           <button type="btn" className='btn btn-secondary'>Back home</button>

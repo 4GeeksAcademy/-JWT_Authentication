@@ -102,22 +102,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 			
 					if (response.ok) {
-						// Si la respuesta indica éxito (código de estado 200), devolver true
-						setStore({ signupSuccesfull: "¡Registro exitoso! Ahora puedes iniciar sesión." });
+					 
+						setStore({ signupSuccesfull: "Successful registration! Now you can log in." });
 						return true;
 					} else if (response.status === 400 && data.msg === "User already exists") {
-						// Si el usuario ya existe, devolver false
+					 
 						return false;
 					} else {
-						// Si hay algún otro error, lanzar una excepción
-						throw new Error(data.msg || "Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente más tarde.");
+					 
+						throw new Error(data.msg || "There was a problem processing your request. Please try again later.");
 					}
 
 					
 				} catch (error) {
-					// Si ocurre algún error de red u otro error, lanzar una excepción
-					console.error("Error al registrar usuario:", error);
-					throw new Error("Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente más tarde.");
+ 
+					console.error("Error registering user:", error);
+					throw new Error("There was a problem processing your request. Please try again later.");
 				}
 			},
 			 

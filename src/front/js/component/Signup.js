@@ -7,7 +7,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [isActive, setIsactive] = useState(false);
     const { actions } = useContext(Context);
-    const [errorMessage, setErrorMessage] = useState(null); // Inicializamos errorMessage como null
+    const [errorMessage, setErrorMessage] = useState(null);  
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -18,10 +18,10 @@ const Signup = () => {
                 navigate("/");
       
             } else {
-                setErrorMessage("Error: Usuario ya existe");
+                setErrorMessage("Error: User already exist");
             }
         } catch (error) {
-            setErrorMessage("Error: Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente más tarde.");
+            setErrorMessage("Error: There was a problem processing your request. Please try again later.");
         }
     };
 
